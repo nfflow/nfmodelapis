@@ -10,5 +10,6 @@ trainer = ModelSelect(model_name,
                       model_output_path,
                       model_architecture=model_architecture
                        ).return_trainer()
-trainer.train()
+trainer.train(data_path=os.path.join(
+                save_timestamp,json_filename))
 ```
