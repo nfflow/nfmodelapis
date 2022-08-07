@@ -52,5 +52,6 @@ class QAPipeline:
     def batch_qa(self, question_col, context_col, data):
         res_list = []
         for q, c in zip(data[question_col], data[context_col]):
-            res_list.append(self.qa(q, c))
+            if q and c:
+                res_list.append(self.qa(q, c))
         return res_list
