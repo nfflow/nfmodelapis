@@ -2,9 +2,28 @@ from transformers import pipeline
 
 
 class QAPipeline:
-    def __init__(self, model, tokenizer):
+    def __init__(self, model, tokenizer, data):
+        """
+
+        Parameters
+        ----------
+        model : str or Model Object
+                String containing model path or
+                Model object from huggingface
+        tokenizer : str or Model Object
+            String containing tokenizer path or
+            Tokenizer object from huggingface.
+        data : str or pandas DataFrame
+            string containing path to dataframe or pandas DataFrame object.
+
+        Returns
+        -------
+        None.
+
+        """
         self.model = model
         self.tokenizer = tokenizer
+        self.data = data
 
     def check_transformers_installation(self):
         try:
