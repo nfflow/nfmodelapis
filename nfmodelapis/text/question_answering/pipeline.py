@@ -41,10 +41,16 @@ class QAPipeline:
             raise('''Transformers not installed.
                   Install Transformers via `pip install transformers''')
 
-    def question_answering(self, question, context):
+    def qa(self, question, context):
         self.check_transformers_installation()
         pipe = pipeline('question-answering',
                         model=self.model,
                         tokenizer=self.tokenizer)
         res = pipe(question, context)
         return res
+
+    def batch_qa(self, question_col, context_col, data):
+        res_list = []
+        for q, c in zip(data[question_col], data[context_col]):
+            res_list.append(self.qa(q, c))
+        return res_list
