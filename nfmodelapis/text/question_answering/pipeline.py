@@ -1,4 +1,5 @@
 from transformers import pipeline
+import pandas as pd
 
 
 class QAPipeline:
@@ -23,7 +24,14 @@ class QAPipeline:
         """
         self.model = model
         self.tokenizer = tokenizer
-        self.data = data
+        if type(data) == str:
+            if data.endswith('.csv'):
+                df = pd.read_csv(data)
+            elif data.endswith('.json'):
+                df = pd.read_json(data)
+        else:
+            df = data
+        self.df = df
 
     def check_transformers_installation(self):
         try:
