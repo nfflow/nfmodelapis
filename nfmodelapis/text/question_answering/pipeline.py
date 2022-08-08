@@ -3,7 +3,7 @@ import pandas as pd
 
 
 class QAPipeline:
-    def __init__(self, model, tokenizer, data):
+    def __init__(self, data, model=None, tokenizer=None):
         """
 
         Parameters
@@ -43,15 +43,29 @@ class QAPipeline:
 
     def qa(self, question, context):
         self.check_transformers_installation()
-        pipe = pipeline('question-answering',
-                        model=self.model,
-                        tokenizer=self.tokenizer)
+        model = self.model
+        tokenizer = self.tokenizer
+        if model and tokenizer:
+            pipe = pipeline('question-answering',
+                            model=self.model,
+                            tokenizer=self.tokenizer)
+        elif model:
+            pipe = pipeline('question-answering',
+                            model=self.model,
+                            )
+        elif tokenizer:
+            pipe = pipeline('question-answering',
+                            tokenizer=self.tokenizer)
+        else:
+            pipe = pipeline('question-answering',
+                            )
         res = pipe(question, context)
         return res
 
-    def batch_qa(self, question_col, context_col, data):
+    def batch_qa(self, question, context_col):
+        data = self.df
         res_list = []
-        for q, c in zip(data[question_col], data[context_col]):
-            if q and c:
-                res_list.append(self.qa(q, c))
+        for c in data[context_col]:
+            if type(c) == str:
+                res_list.append(self.qa(question, c))
         return res_list
