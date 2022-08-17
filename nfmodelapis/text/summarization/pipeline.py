@@ -48,16 +48,20 @@ class SummarizationPipeline:
         if model and tokenizer:
             pipe = pipeline('summarization',
                             model=self.model,
-                            tokenizer=self.tokenizer)
+                            tokenizer=self.tokenizer,
+                            truncation=True)
         elif model:
             pipe = pipeline('summarization',
                             model=self.model,
+                            truncation=True
                             )
         elif tokenizer:
             pipe = pipeline('summarization',
-                            tokenizer=self.tokenizer)
+                            tokenizer=self.tokenizer,
+                            truncation=True)
         else:
             pipe = pipeline('summarization',
+                            truncation=True
                             )
         res = pipe(text)
         return res
