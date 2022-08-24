@@ -3,6 +3,12 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+extras = {'qa': 'transformers',
+          'summarization': 'transformers',
+          'unsupervised': 'sentence_transformers'}
+
+extras['all'] = list(set(extras.values()))
+
 install_requires = ["sentence_transformers"]
 setuptools.setup(
     name="nfmodelapis",
@@ -16,6 +22,7 @@ setuptools.setup(
     url="https://github.com/nfflow/nfmodelapis",
     install_requires=install_requires,
     packages=setuptools.find_packages(),
+    extras_require=extras,
     python_requires='>=3.6',
     include_package_data=True
 )
