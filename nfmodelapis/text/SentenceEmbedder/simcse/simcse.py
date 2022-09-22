@@ -32,7 +32,7 @@ class SimCSETrainer:
                                                   pooling_model],
                                          device=device)
 
-    def train(self, data_path,
+    def train(self, data,
               steps_per_epoch=100000,
               warmup_steps=0.1,
               optimizer_params={'lr': 2e-5},
@@ -46,7 +46,9 @@ class SimCSETrainer:
         model_output_path = self.model_output_path
         batch_size = self.batch_size
 
-        data = pd.read_json(data_path, lines=True)
+        if isinstance(data, str):
+            data = pd.read_json(data, lines=True)
+
         train_sentences = data["text"]
         train_dataloader = DataLoader(train_sentences,
                                       shuffle=True,
