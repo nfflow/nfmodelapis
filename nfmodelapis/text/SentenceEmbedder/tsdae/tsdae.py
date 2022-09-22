@@ -35,7 +35,7 @@ class TsdaeTrainer:
                                                   pooling_model],
                                          device=device)
 
-    def train(self, data_path,
+    def train(self, data,
               steps_per_epoch=100000,
               warmup_steps=0.1,
               optimizer_params={'lr': 2e-5},
@@ -50,7 +50,8 @@ class TsdaeTrainer:
         batch_size = self.batch_size
         model_name = self.model_name
 
-        data = pd.read_json(data_path, lines=True)
+        if isinstance(data, str):
+            data = pd.read_json(data, lines=True)
         train_sentences = data["text"]
         train_dataset = datasets.DenoisingAutoEncoderDataset(train_sentences)
         train_dataloader = DataLoader(train_dataset,
