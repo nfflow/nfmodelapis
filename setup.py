@@ -3,16 +3,16 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-extras = {'qa': 'transformers',
-          'summarization': 'transformers',
-          'unsupervised': 'sentence_transformers'}
+extras = {'qa': ['transformers'],
+          'summarization': ['transformers'],
+          'unsupervised': ['sentence_transformers'],
+          'ner': ['spacy', 'scispacy']}
 
-extras['all'] = list(set(extras.values()))
 
-install_requires = ["sentence_transformers"]
+install_requires = list(extras.values())
 setuptools.setup(
     name="nfmodelapis",
-    version="0.0.1",
+    version="0.0.2",
     author="Abhijith Neil Abraham",
     author_email="abhijithneilabrahampk@gmail.com",
     description="Data Curation over Time",
